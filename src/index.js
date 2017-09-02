@@ -40,6 +40,7 @@ function reduce(array, fn, initial) {
  Функция должна удалить указанное свойство из указанного объекта
  */
 function deleteProperty(obj, prop) {
+	if("prop" in obj) delete obj["prop"];
 }
 
 /*
@@ -48,6 +49,9 @@ function deleteProperty(obj, prop) {
  Функция должна проверить существует ли укзаанное свойство в указанном объекте
  */
 function hasProperty(obj, prop) {
+	if("prop" in obj) {
+		return true;
+	} else {return false;}
 }
 
 /*
@@ -55,6 +59,11 @@ function hasProperty(obj, prop) {
  Функция должна получить все перечисляемые свойства объекта и вернуть их в виде массива
  */
 function getEnumProps(obj) {
+	var arr = [];
+	for (var key in obj) {
+		arr.push(key);
+	}
+	return arr;
 }
 
 /*
@@ -62,6 +71,12 @@ function getEnumProps(obj) {
  Функция должна перебрать все свойства объекта, преобразовать их имена в верхний регистра и вернуть в виде массива
  */
 function upperProps(obj) {
+	var arr = [];
+	for (var key in obj) {
+		var x = key.toUpperCase();
+		arr.push(x);
+	}
+	return arr;
 }
 
 /*
@@ -82,6 +97,11 @@ function slice(array, from, to) {
  Proxy должен перехватывать все попытки записи значений свойств и возводить это значение в квадрат
  */
 function createProxy(obj) {
+	var p = new Proxy(obj, {
+		set: function(obj, prop, value, receiver) {
+    obj[prop] = value * value;
+	});
+	return p;
 }
 
 export {
