@@ -11,14 +11,15 @@
  */
 function isAllTrue(array, fn) {
 	try {
-    if(array.length == null) throw "empty array";
+    if(array.length == 0) throw "empty array";
+    if(array.length === null) throw "empty array";
+    if(array.length === undefined) throw "empty array";
     if(fn() === undefined) throw "fn is not a function";
     }
     catch(err) {
       console.log(err.message);
     }
   for (var i = 0; i < array.length; i++) {
-  	fn(array[i]);
 		if (fn(array[i]) == false) {
 			var x = 1;
 		}
@@ -37,7 +38,9 @@ function isAllTrue(array, fn) {
  */
 function isSomeTrue(array, fn) {
 	try {
-    if((array.length == 0) || (!array.length === number)) throw "empty array";
+    if(array.length == 0) throw "empty array";
+    if(array.length === null) throw "empty array";
+    if(array.length === undefined) throw "empty array";
     if(fn() === undefined) throw "fn is not a function";
     }
     catch(err) {
@@ -63,11 +66,10 @@ function returnBadArguments(fn) {
 	var BadArguments = [];
 	for (var i = 1; i < arguments.length; i++) {
 		try {
-			if(fn() === undefined) throw new FuncError("fn is not a function") else
 			fn(arguments[i]);
 		}
 		catch(e) {
-			if (e.name == "FuncError") {console.log(e.message)} else {BadArguments.push(arguments[i]);
+			BadArguments.push(arguments[i]);
 		}
 	}
 	return BadArguments;
@@ -87,7 +89,15 @@ function returnBadArguments(fn) {
  - number не является числом (с текстом "number is not a number")
  - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
-function calculator() {
+function calculator(number) {
+	if(number === undefined) number = 0;
+	var obj = {
+		sum: function() {};
+		dif: function() {};
+		div: function() {};
+		mul: function() {};
+	}
+	return obj;
 }
 
 export {
