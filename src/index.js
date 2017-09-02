@@ -6,7 +6,7 @@
  */
 function forEach(array, fn) {
 	for (var i = 0; array.length; i++) {
-		fn(array[i]);
+		fn(array[i], i, array);
 	}
 }
 
@@ -17,7 +17,7 @@ function forEach(array, fn) {
 function map(array, fn) {
 	var newArray = [];
 	for (var i = 0; array.length; i++) {
-		newArray[i] = fn(array[i]);
+		newArray[i] = fn(array[i], i, array);
 	}
 	return newArray;
 }
