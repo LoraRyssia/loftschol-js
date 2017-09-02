@@ -10,6 +10,20 @@
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isAllTrue(array, fn) {
+	try {
+    if(array.length == null) throw "empty array";
+    if(fn() === undefined) throw "fn is not a function";
+    }
+    catch(err) {
+      console.log(err.message);
+    }
+  for (var i = 0; i < array.length; i++) {
+  	fn(array[i]);
+		if (fn(array[i]) == false) {
+			var x = 1;
+		}
+	}
+  if (x) {return false} else {return true}
 }
 
 /*
@@ -22,6 +36,19 @@ function isAllTrue(array, fn) {
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isSomeTrue(array, fn) {
+	try {
+    if((array.length == 0) || (!array.length === number)) throw "empty array";
+    if(fn() === undefined) throw "fn is not a function";
+    }
+    catch(err) {
+      console.log(err.message);
+    }
+	for (var i = 0; i < array.length; i++) {
+		if (fn(array[i]) == true) {
+			var x = 1;
+		}
+	}
+    if (x) {return true} else {return false}
 }
 
 /*
@@ -33,6 +60,17 @@ function isSomeTrue(array, fn) {
  - fn не является функцией (с текстом "fn is not a function")
  */
 function returnBadArguments(fn) {
+	var BadArguments = [];
+	for (var i = 1; i < arguments.length; i++) {
+		try {
+			if(fn() === undefined) throw new FuncError("fn is not a function") else
+			fn(arguments[i]);
+		}
+		catch(e) {
+			if (e.name == "FuncError") {console.log(e.message)} else {BadArguments.push(arguments[i]);
+		}
+	}
+	return BadArguments;
 }
 
 /*
