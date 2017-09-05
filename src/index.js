@@ -29,7 +29,7 @@ function map(array, fn) {
 function reduce(array, fn, initial) {
 	var result = initial;
 	for (var i = 0; array.length; i++) {
-		result = result + fn(array[i]);
+		result = fn(result, array[i]);
 	}
 	return result;
 }
@@ -115,3 +115,4 @@ export {
     slice,
     createProxy
 };
+ 
