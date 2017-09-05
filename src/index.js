@@ -11,20 +11,25 @@
  */
 function isAllTrue(array, fn) {
 	try {
-    if(array.length == 0) throw "empty array";
-    if(array.length === null) throw "empty array";
-    if(array.length === undefined) throw "empty array";
-    if(fn() === undefined) throw "fn is not a function";
+    if (array.length == 0 ||
+    	array.length === null ||
+    	array.length === undefined ||
+    	typeof array !== 'object') {
+    	throw new Err("empty array");
+    	} else if (fn() === undefined) {
+    		throw new Err("fn is not a function");
+    	} else {
+		  	for (var i = 0; i < array.length; i++) {
+					if (fn(array[i]) == false) {
+						var x = 1;
+					}
+				}
+				if (x) {return false} else {return true}
+		  }
+   	}
+    catch (e) {
+      console.log(e.message);
     }
-    catch(err) {
-      console.log(err.message);
-    }
-  for (var i = 0; i < array.length; i++) {
-		if (fn(array[i]) == false) {
-			var x = 1;
-		}
-	}
-  if (x) {return false} else {return true}
 }
 
 /*
@@ -38,20 +43,25 @@ function isAllTrue(array, fn) {
  */
 function isSomeTrue(array, fn) {
 	try {
-    if(array.length == 0) throw "empty array";
-    if(array.length === null) throw "empty array";
-    if(array.length === undefined) throw "empty array";
-    if(fn() === undefined) throw "fn is not a function";
+    if (array.length == 0 ||
+    	array.length === null ||
+    	array.length === undefined ||
+    	typeof array !== 'object') {
+    	throw new Err("empty array");
+    	} else if (fn() === undefined) {
+    		throw new Err("fn is not a function");
+    	} else {
+		  	for (var i = 0; i < array.length; i++) {
+					if (fn(array[i]) == true) {
+						var x = 1;
+					}
+				}
+				if (x) {return true} else {return false}
+		  }
+   	}
+    catch (e) {
+      console.log(e.message);
     }
-    catch(err) {
-      console.log(err.message);
-    }
-	for (var i = 0; i < array.length; i++) {
-		if (fn(array[i]) == true) {
-			var x = 1;
-		}
-	}
-    if (x) {return true} else {return false}
 }
 
 /*
@@ -63,16 +73,25 @@ function isSomeTrue(array, fn) {
  - fn не является функцией (с текстом "fn is not a function")
  */
 function returnBadArguments(fn) {
-	var BadArguments = [];
-	for (var i = 1; i < arguments.length; i++) {
-		try {
-			fn(arguments[i]);
-		}
-		catch(e) {
-			BadArguments.push(arguments[i]);
+	try {
+		if (fn() === undefined) {
+			throw new Err("fn is not a function");
+		} else {
+			var BadArguments = [];
+				for (var i = 1; i < arguments.length; i++) {
+					try {
+						fn(arguments[i]);
+					}
+					catch(e) {
+						BadArguments.push(arguments[i]);
+					}
+				}
+				return BadArguments;
 		}
 	}
-	return BadArguments;
+	catch (e) {
+		console.log(e.message);
+	}
 }
 
 /*
@@ -90,14 +109,57 @@ function returnBadArguments(fn) {
  - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
 function calculator(number) {
-	if(number === undefined) number = 0;
-	var obj = {
-		sum: function() {};
-		dif: function() {};
-		div: function() {};
-		mul: function() {};
+	try {
+		if (typeof number != number || typeof number != undefined) {
+			throw new Err("number is not a number");
+		} else {
+			if(number === undefined) number = 0;
+			var obj = {
+				initial: number,
+				sum: function() {
+					var result = this.initial;
+					for(var i = 0; i < arguments.length; i++) {
+						result = result + + arguments[i];
+					}
+					return result;
+				},
+				dif: function() {
+					var result = this.initial;
+					for(var i = 0; i < arguments.length; i++) {
+						result = result - arguments[i];
+					}
+					return result;
+				},
+				div: function() {
+					var result = this.initial;
+					for(var i = 0; i < arguments.length; i++) {
+						try {
+							if {arguments[i] == 0} {
+								throw new Err("division by 0");
+							} else {
+								result = result/arguments[i];
+							}
+						}
+						catch (e) {
+							console.log(e.message);
+						}
+					}
+					return result;
+				},
+				mul: function() {
+					var result = this.initial;
+					for(var i = 0; i < arguments.length; i++) {
+						result = result*arguments[i];
+					}
+					return result;
+				}
+			}
+			return obj;
+		}
 	}
-	return obj;
+	catch (e) {
+		console.log(e.message);
+	}
 }
 
 export {
