@@ -99,8 +99,8 @@ function findError(where) {
  */
 function deleteTextNodes(where) {
     for (var i = 1; i < where.childNodes.length; i++) {
-        if (where.childNodes[i].nodeType === 3) {
-            where.childNodes[i].remove();
+        if (where.childNodes[i].nodeType == 3) {
+            where.childNodes[i].textContent = '';
         }
     }
 }
@@ -119,6 +119,7 @@ function deleteTextNodesRecursive(where) {
     for (var i = 1; i < where.childNodes.length; i++) {
         if (where.childNodes[i].nodeType === 3) {
             where.childNodes[i].remove();
+            i--;
         } else if (where.childNodes[i].childNodes.length) {
             deleteTextNodesRecursive(where.childNodes[i]);
         }
