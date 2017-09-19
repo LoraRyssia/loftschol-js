@@ -36,6 +36,40 @@ let homeworkContainer = document.querySelector('#homework-container');
  * @return {Promise<Array<{name: string}>>}
  */
 function loadTowns() {
+    filterInput.classList.add('filter-input-hide');
+    loadingBlock.classList.add('loading-block-show');
+
+    function sortList(a, b) {
+        if (a.name > b.name) {
+            return 1;
+        }
+
+        if (a.name < b.name) {
+            return -1;
+        }
+
+        return 0;
+    }
+
+    return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+
+        xhr.open('GET', 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json');
+        xhr.send();
+        xhr.responseType = 'json';
+        xhr.addEventListener('load', () => {
+            if (xhr.status === 200) {
+                let list = xhr.response;
+
+                list.sort(sortList);
+                resolve(list);
+                loadingBlock.classList.remove('loading-block-show');
+                filterInput.classList.remove('filter-input-hide');
+            } else {
+                reject();
+            }
+        })
+    })
 }
 
 /**
@@ -52,6 +86,12 @@ function loadTowns() {
  * @return {boolean}
  */
 function isMatching(full, chunk) {
+    let x = full.toLowerCase();
+    let y = chunk.toLowerCase();
+
+    if (x.search(y) < 0) {
+        return false;
+    } else {return true;}
 }
 
 let loadingBlock = homeworkContainer.querySelector('#loading-block');
@@ -60,8 +100,11 @@ let filterInput = homeworkContainer.querySelector('#filter-input');
 let filterResult = homeworkContainer.querySelector('#filter-result');
 let townsPromise;
 
-filterInput.addEventListener('keyup', function() {
-});
+filterInput.addEventListener('keyup', function(list) {
+    let Chunk = filterInput.value;
+
+
+}
 
 export {
     loadTowns,
