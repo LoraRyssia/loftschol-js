@@ -36,9 +36,7 @@ let homeworkContainer = document.querySelector('#homework-container');
  * @return {Promise<Array<{name: string}>>}
  */
 function loadTowns() {
-    filterInput.classList.add('filter-input-hide');
-    loadingBlock.classList.add('loading-block-show');
-
+    loadingBlock.classList.toggle("hide");
     function sortList(a, b) {
         if (a.name > b.name) {
             return 1;
@@ -58,19 +56,20 @@ function loadTowns() {
         xhr.send();
         xhr.responseType = 'json';
         xhr.addEventListener('load', () => {
-            if (xhr.status === 200) {
+            if (xhr.status < 400) {
                 let list = xhr.response;
 
                 list.sort(sortList);
                 resolve(list);
-                loadingBlock.classList.remove('loading-block-show');
-                filterInput.classList.remove('filter-input-hide');
+                loadingBlock.classList.add("hide");
+                filterInput.classList.remove("hide");
             } else {
                 reject();
             }
         })
     })
 }
+
 
 /**
  * Функция должна проверять встречается ли подстрока chunk в строке full
@@ -98,13 +97,37 @@ let loadingBlock = homeworkContainer.querySelector('#loading-block');
 let filterBlock = homeworkContainer.querySelector('#filter-block');
 let filterInput = homeworkContainer.querySelector('#filter-input');
 let filterResult = homeworkContainer.querySelector('#filter-result');
+let btn = homeworkContainer.querySelector('#load-again');
 let townsPromise;
 
-filterInput.addEventListener('keyup', function(list) {
-    let Chunk = filterInput.value;
+loadTowns()
+    .then (list => {
+        townsPromise = list;
+        filterInput.addEventListener('keyup', function() {
+            const inputValue = filterInput.value;
 
+            filterResult.innerHTML = '';
+            if (inputValue) {
+                for (let i of townsPromise) {
+                    if (isMatching(i.name, inputValue)) {
+                        const li = document.createElement('li');
 
-}
+                        li.innerHTML = i.name;
+                        filterResult.appendChild(li);
+                    }
+                }
+            }
+        });
+    })
+    .catch (() => {
+        loadingBlock.classList.add("hide");
+        filterBlock.classList.remove("hide");
+        btn.addEventListener('click', () => {
+            this.classList.add('hide');
+
+            return loadTowns();
+        });
+    });
 
 export {
     loadTowns,

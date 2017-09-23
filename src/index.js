@@ -37,9 +37,11 @@ function loadAndSortTowns() {
     }
 
     return new Promise((resolve, reject) => {
+        const url = 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json';
+
         let xhr = new XMLHttpRequest();
 
-        xhr.open('GET', 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json');
+        xhr.open('GET', url);
         xhr.send();
         xhr.responseType = 'json';
         xhr.addEventListener('load', () => {

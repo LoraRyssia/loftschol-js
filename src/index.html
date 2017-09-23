@@ -7,19 +7,23 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Список городов</title>
     <style>
-        
+        .hide {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
     <div id="homework-container" class="homework-container">
-        <div id="loading-block" class="loading-block">
-            Загрузка...
-        </div>
+        <div id="loading-block" class="loading-block">Загрузка...</div>
         <input type="text" id="filter-input" class="filter-input" placeholder="Введите название города">
-        <ul id="filter-result" class="filter-result"></ul>
-        <div id="filter-block" class="filter-block">Не удалось загрузить список городов</div>
-        <button id="btn" class="btn">Повторить</button>
+        <ul id="filter-result" class="filter-result">
+            
+        </ul>
+        <div id="filter-block" class="filter-block hide">
+            <p>Не удалось загрузить список городов</p>
+            <button id="load-again" class="btn">Повторить</button>
+        </div>
     </div>
 
     <script src="towns.js"></script>
