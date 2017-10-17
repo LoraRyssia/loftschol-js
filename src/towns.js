@@ -29,6 +29,13 @@
  */
 let homeworkContainer = document.querySelector('#homework-container');
 
+let loadingBlock = homeworkContainer.querySelector('#loading-block');
+let filterBlock = homeworkContainer.querySelector('#filter-block');
+let filterInput = homeworkContainer.querySelector('#filter-input');
+let filterResult = homeworkContainer.querySelector('#filter-result');
+let btn = homeworkContainer.querySelector('#load-again');
+let townsPromise;
+
 /**
  * Функция должна загружать список городов из https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json
  * И возвращать Promise, которой должен разрешиться массивом загруженных городов
@@ -53,7 +60,6 @@ function loadTowns() {
         let xhr = new XMLHttpRequest();
 
         xhr.open('GET', 'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json');
-        xhr.send();
         xhr.responseType = 'json';
         xhr.addEventListener('load', () => {
             if (xhr.status < 400) {
@@ -66,7 +72,8 @@ function loadTowns() {
             } else {
                 reject();
             }
-        })
+        });
+        xhr.send();
     })
 }
 
@@ -88,17 +95,8 @@ function isMatching(full, chunk) {
     let x = full.toLowerCase();
     let y = chunk.toLowerCase();
 
-    if (x.search(y) < 0) {
-        return false;
-    } else {return true;}
+    if (x.search(y) < 0) {return false;} return true;
 }
-
-let loadingBlock = homeworkContainer.querySelector('#loading-block');
-let filterBlock = homeworkContainer.querySelector('#filter-block');
-let filterInput = homeworkContainer.querySelector('#filter-input');
-let filterResult = homeworkContainer.querySelector('#filter-result');
-let btn = homeworkContainer.querySelector('#load-again');
-let townsPromise;
 
 loadTowns()
     .then (list => {

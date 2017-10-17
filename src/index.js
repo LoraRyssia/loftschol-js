@@ -7,7 +7,7 @@
  * @return {Promise}
  */
 function delayPromise(seconds) {
-    let delay = seconds + "000";
+    let delay = seconds*1000;
 
     return new Promise(function (resolve, reject) {
         setTimeout(function () {
@@ -42,7 +42,6 @@ function loadAndSortTowns() {
         let xhr = new XMLHttpRequest();
 
         xhr.open('GET', url);
-        xhr.send();
         xhr.responseType = 'json';
         xhr.addEventListener('load', () => {
             if (xhr.status === 200) {
@@ -53,7 +52,8 @@ function loadAndSortTowns() {
             } else {
                 reject();
             }
-        })
+        });
+        xhr.send();
     })
 }
 
